@@ -1,0 +1,28 @@
+import pandas as pd
+
+def find_s_algorithm(data):
+    # Initialize the hypothesis to the most specific hypothesis
+    hypothesis = ['?' for _ in range(len(data.columns) - 1)]
+    
+    # Get the target variable column
+    target = data.columns[-1]
+    
+    # Iterate over each row in the data
+    for _, row in data.iterrows():
+        if row[target] == 'Yes':  # Only consider positive examples
+            # Update the hypothesis
+            for i in range(len(hypothesis)):
+                if hypothesis[i] == '?':
+                    hypothesis[i] = row[i]
+                elif hypothesis[i] != row[i]:
+                    hypothesis[i] = '?'
+                    
+    return hypothesis
+
+# Read the training data from a CSV file
+data = pd.read_csv("C:\\Users\\AMRUTHA\\Desktop\\trainingdata.csv")
+
+# Run FIND-S algorithm
+hypothesis = find_s_algorithm(data)
+
+print("Most specific hypothesis:", hypothesis)
